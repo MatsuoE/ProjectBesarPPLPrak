@@ -15,5 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', [susunanMKController::class, 'index']);
+Route::get('/susunanmk', [susunanMKController::class, 'index']);
 Route::get('/organisasimk', [organisasiMKController::class, 'index']);
 Route::resource('susunanMK', susunanMKController::class);
