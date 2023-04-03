@@ -43,68 +43,6 @@
     <!-- Body -->
     <div class="d-block p-5">
         <h2 class="text-center">Susunan Mata Kuliah</h2>
-        <div class="float-end my-2">
-            <button type="button" class="btn btn-success" data-mdb-toggle="modal" data-mdb-target="#staticBackdrop2">Tambah Mata Kuliah</button>
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-                <div class="modal-dialog d-flex justify-content-center">
-                    <div class="modal-content w-75">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel2">Tambah Mata Kuliah</h5>
-                            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body p-4">
-                            <form action="{{ route('susunanMK.store') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <!-- kode mk -->
-                                <div class="form-outline mb-4">
-                                    <input type="text" id="kodeMK" class="form-control" name="kodeMK"/>
-                                    <label class="form-label" for="kodeMK">Kode MK</label>
-                                </div>
-
-                                <!-- nama mk -->
-                                <div class="form-outline mb-4">
-                                    <input type="text" id="namaMK" class="form-control" name="namaMK"/>
-                                    <label class="form-label" for="namaMK">Nama MK</label>
-                                </div>
-
-                                <!-- bk -->
-                                <div class="mb-4">
-                                    <select class="selectpicker show-tick" multiple title="bk" data-size="6" name="bk[]">
-                                        <option value="BK01">BK01</option>
-                                        <option value="BK02">BK02</option>
-                                    </select>
-                                </div>
-
-                                <!-- sks -->
-                                <div class="form-outline mb-4">
-                                    <input type="text" id="sks" class="form-control" name="sks"/>
-                                    <label class="form-label" for="sks">SKS</label>
-                                </div>
-
-                                <!-- smt -->
-                                <div class="form-outline mb-4">
-                                    <input type="text" id="smt" class="form-control" name="smt"/>
-                                    <label class="form-label" for="smt">Semester</label>
-                                </div>
-
-                                <!-- keterangan -->
-                                <div class="mb-4">
-                                    <select class="selectpicker show-tick" title="Keterangan" name="keterangan">
-                                        <option value="Wajib">Wajib</option>
-                                        <option value="Pilihan">Pilihan</option>
-                                    </select>
-                                </div>
-
-                                <!-- Submit button -->
-                                <button type="submit" class="btn btn-primary btn-block">Tambah</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal -->
-        </div>
         <table class="table">
             <thead>
                 <tr>
@@ -112,9 +50,15 @@
                     <th width="700px">Nama MK</th>
                     <th width="180px">BK</th>
                     <th width="90px">SKS</th>
-                    <th width="90px">Semester</th>
+                    <th width="90px">1</th>
+                    <th width="90px">2</th>
+                    <th width="90px">3</th>
+                    <th width="90px">4</th>
+                    <th width="90px">5</th>
+                    <th width="90px">6</th>
+                    <th width="90px">7</th>
+                    <th width="90px">8</th>
                     <th width="180px">Keterangan</th>
-                    <th width="180px">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -123,16 +67,21 @@
                     <td>{{ $p->kodeMK }}</td>
                     <td>{{ $p->namaMK }}</td>
                     <td>{{ $p->bk }}</td>
-                    <td>{{ $p->smt }}</td>
                     <td>{{ $p->sks }}</td>
+                    @for($i = 1; $i <= 8; $i++)
+                        <td>
+                            @if(strpos($p->smt, strval($i)) !== false)
+                            <div class="form-check form-check-inline d-flex align-items-center">
+                                <input class="form-check-input" type="checkbox" checked disabled style="background-color: blue !important; border-color: blue !important;">
+                            </div>
+                            @else
+                            <div class="form-check form-check-inline d-flex align-items-center">
+                                <input class="form-check-input" type="checkbox" disabled>
+                            </div>
+                            @endif
+                        </td>
+                    @endfor
                     <td>{{ $p->keterangan }}</td>
-                    <td>
-                        <form action="{{ route('susunanMK.destroy',$p->kodeMK) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    </td>
                 </tr>
                 @endforeach
             </tbody>

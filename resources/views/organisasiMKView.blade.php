@@ -42,14 +42,14 @@
 
     <div class="d-block p-5">
         <h2 class="text-center pb-3">Organisasi MK</h2>
-        <table class="table">
+        <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Semester</th>
-                    <th>Total SKS</th>
-                    <th>Total MK</th>
-                    <th>MK Wajib</th>
-                    <th>MK Pilihan</th>
+                    <th width="90px">Semester</th>
+                    <th width="90px">Total SKS</th>
+                    <th width="90px">Total MK</th>
+                    <th class="text-center">MK Wajib</th>
+                    <th width="200px">MK Pilihan</th>
                 </tr>
             </thead>
             <tbody>
@@ -59,13 +59,27 @@
                         <td>{{ $MKBysmt->sum('sks') }}</td>
                         <td>{{ $MKBysmt->count() }}</td>
                         <td>
-                            @foreach($MKBysmt->where('keterangan', 'Wajib') as $product)
-                                {{ $product->namaMK }}<br>
-                            @endforeach
+                            @if($MKBysmt->where('keterangan', 'Wajib')->count() > 1)
+                                <table class="table table-bordered border-dark">
+                                    <tr>
+                                        @foreach($MKBysmt->where('keterangan', 'Wajib') as $product)
+                                            <td>{{ $product->kodeMK }}</td>
+                                        @endforeach
+                                    </tr>
+                                </table>
+                            @else
+                                @foreach($MKBysmt->where('keterangan', 'Wajib') as $product)
+                                    <table class="table table-bordered border-dark">
+                                        <tr>
+                                            <td>{{ $product->kodeMK }}</td>
+                                        </tr>
+                                    </table>
+                                @endforeach
+                            @endif
                         </td>
                         <td>
                             @foreach($MKBysmt->where('keterangan', 'Pilihan') as $product)
-                                {{ $product->namaMK }}<br>
+                                {{ $product->kodeMK }}
                             @endforeach
                         </td>
                     </tr>
