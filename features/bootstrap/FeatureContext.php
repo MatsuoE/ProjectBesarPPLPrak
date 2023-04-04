@@ -85,4 +85,38 @@ class FeatureContext implements Context
     throw new Exception("Error Processing Request");
 }
 
+/**
+     * @Then the user should see BK with ID :arg1
+     */
+    public function theUserShouldSeeBkWithId2($arg1)
+    {
+        $host = '127.0.0.1';
+        $db   = 'projectbesarppl';
+        $user = 'root';
+        $pass = '';
+        $charset = 'utf8mb4';
+
+        $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+        $options = [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES   => false,
+        ];
+        $pdo = new PDO($dsn, $user, $pass, $options);
+
+        // Fetch data from the "susunanmk" table
+        $stmt = $pdo->query('SELECT * FROM susunanmk');
+        $bk = $stmt->fetchAll();
+
+        // Check if the MK with ID $arg1 exists
+        foreach ($bk as $bahan) {
+            if ($bahan['bk'] == $arg1) {
+                return true;
+            }
+        }
+
+        // BK with ID $arg1 not found, throw an exception
+        throw new Exception("Error Processing Request");  
+    }
+
 }
